@@ -560,98 +560,126 @@
       margin-bottom: 20px;
     }
 
-    .leaderboard-list {
-      display: flex;
-      flex-direction: column;
+    /* Dual Column Leaderboard (okungfu & IGZ style) */
+    .lb-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      width: 100%;
+      margin-bottom: 8px;
+    }
+
+    .lb-page-col {
+      padding: 4px;
+    }
+
+    .lb-col-title {
+      text-align: center;
+      font-size: 1.05rem;
+      font-weight: 900;
+      color: var(--accent-neon);
+      margin-bottom: 12px;
+      letter-spacing: .02em;
+      text-shadow: 0 0 10px rgba(34, 197, 94, 0.4);
+    }
+
+    .lb-rows {
+      display: grid;
       gap: 8px;
+      min-height: 80px;
     }
 
-    .lb-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 12px;
-      padding: 10px 14px;
-      transition: all 0.2s;
-    }
-
-    .lb-row:hover {
-      background: rgba(255, 255, 255, 0.06);
-      border-color: var(--border-subtle);
-    }
-
-    .lb-left {
+    .rank-row {
       display: flex;
       align-items: center;
       gap: 10px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, .03);
+      border: 1px solid rgba(255, 255, 255, .06);
+      opacity: 0;
+      transform: translateY(8px);
+      animation: rowIn .4s ease forwards;
+      transition: transform .25s cubic-bezier(.25,.46,.45,.94), border-color .2s ease, background .2s ease;
     }
 
-    .lb-rank {
-      width: 26px;
-      height: 26px;
+    .rank-row:hover {
+      transform: translateX(-3px);
+      border-color: rgba(34, 197, 94, 0.35);
+      background: rgba(255, 255, 255, .06);
+    }
+
+    @keyframes rowIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .rank-num {
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.08);
-      font-size: 0.75rem;
-      font-weight: 800;
       display: flex;
       align-items: center;
       justify-content: center;
+      font-weight: 900;
+      font-size: 11px;
+      background: rgba(255, 255, 255, .08);
+      color: rgba(255, 255, 255, .6);
+      flex: 0 0 auto;
     }
 
-    .lb-rank.gold { background: #ffd700; color: #111; box-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
-    .lb-rank.silver { background: #c0c0c0; color: #111; box-shadow: 0 0 10px rgba(192, 192, 192, 0.5); }
-    .lb-rank.bronze { background: #cd7f32; color: #111; box-shadow: 0 0 10px rgba(205, 127, 50, 0.5); }
-
-    .lb-user {
-      font-weight: 700;
-      font-size: 0.88rem;
+    .rank-row.top1 .rank-num {
+      background: linear-gradient(135deg, #ffd966, #c9920b);
+      color: #3a2800;
+      box-shadow: 0 0 10px rgba(255, 217, 102, 0.5);
     }
 
-    .lb-points {
-      font-weight: 800;
-      font-size: 0.82rem;
-      color: var(--accent-mint);
-      display: flex;
-      align-items: center;
-      gap: 5px;
+    .rank-row.top2 .rank-num {
+      background: linear-gradient(135deg, #e6e6e6, #9c9c9c);
+      color: #222;
+      box-shadow: 0 0 8px rgba(230, 230, 230, 0.4);
     }
 
-    /* Timeframe Selector Dock */
-    .timeframe-dock {
-      display: flex;
-      justify-content: center;
-      gap: 6px;
-      margin-bottom: 16px;
-      background: rgba(0, 0, 0, 0.28);
-      padding: 4px;
-      border-radius: 12px;
-      border: 1px solid var(--border-subtle);
+    .rank-row.top3 .rank-num {
+      background: linear-gradient(135deg, #e3a06a, #a85f2c);
+      color: #2a1500;
+      box-shadow: 0 0 8px rgba(227, 160, 106, 0.4);
     }
 
-    .tf-btn {
+    .rank-name {
       flex: 1;
-      padding: 6px 12px;
-      background: transparent;
-      border: none;
-      border-radius: 8px;
-      color: var(--text-muted);
-      font-size: 0.78rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s;
+      min-width: 0;
+      font-weight: 800;
+      font-size: 13px;
+      direction: ltr;
+      text-align: left;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: var(--text-main);
     }
 
-    .tf-btn.active {
-      background: rgba(34, 197, 94, 0.22);
+    .rank-val {
+      font-weight: 900;
+      font-size: 12px;
       color: var(--accent-neon);
-      border: 1px solid rgba(74, 222, 128, 0.4);
-      box-shadow: 0 0 10px rgba(34, 197, 94, 0.25);
+      direction: ltr;
+      flex: 0 0 auto;
     }
 
-    .tf-btn:hover:not(.active) {
-      color: #fff;
+    .lb-empty {
+      color: var(--text-muted);
+      font-size: 13px;
+      text-align: center;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 12px;
+      border: 1px dashed rgba(255, 255, 255, 0.08);
+    }
+
+    @media (max-width: 640px) {
+      .lb-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     /* Kick Commands Helper Box */
@@ -1096,7 +1124,7 @@
       </button>
       <button class="tab-btn" onclick="switchTab('community')">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-        <span>Watchtime</span>
+        <span>Leaderboard</span>
       </button>
       <button class="tab-btn" onclick="switchTab('about')">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
@@ -1111,26 +1139,30 @@
       </div>
     </section>
 
-    <!-- TAB 2: Kick Watchtime Leaderboard -->
+    <!-- TAB 2: Kick Watchtime Leaderboard (okungfu & IGZ dual-column layout) -->
     <section id="tab-community" class="tab-content">
       <div class="community-card">
         <div style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; background: rgba(34, 197, 94, 0.12); border: 1px solid rgba(74, 222, 128, 0.35); border-radius: 20px; color: var(--accent-neon); font-size: 0.75rem; font-weight: 800; margin-bottom: 12px; text-transform: uppercase;">
           <span style="width: 7px; height: 7px; border-radius: 50%; background: var(--accent-neon); box-shadow: 0 0 8px var(--accent-neon);"></span>
-          <span>Kick Watchtime</span>
+          <span>Kick Live Leaderboard</span>
         </div>
 
-        <h2 class="community-header-title">מובילי זמן צפייה בערוץ</h2>
-        <p class="community-subtitle">דירוג הצופים עם הכי הרבה שעות צפייה בערוץ ה-Kick של אוריה</p>
+        <h2 class="community-header-title">לוח המובילים של הערוץ</h2>
+        <p class="community-subtitle">דירוג הצופים והתורמים בערוץ ה-Kick של אוריה מתוך המערכת הרשמית</p>
 
-        <!-- Timeframe selector -->
-        <div class="timeframe-dock">
-          <button class="tf-btn active" onclick="setWatchtimeFilter('all', this)">כל הזמנים</button>
-          <button class="tf-btn" onclick="setWatchtimeFilter('monthly', this)">החודש</button>
-          <button class="tf-btn" onclick="setWatchtimeFilter('weekly', this)">השבוע</button>
-        </div>
-
-        <div class="leaderboard-list" id="watchtime-list">
-          <!-- Rendered dynamically from SITE_CONFIG.watchtime -->
+        <div class="lb-grid" dir="rtl">
+          <div class="lb-page-col">
+            <div class="lb-col-title">Top Watchtime</div>
+            <div class="lb-rows" id="lbFullWatch">
+              <div class="lb-empty" style="padding:18px">טוען שעות צפייה...</div>
+            </div>
+          </div>
+          <div class="lb-page-col">
+            <div class="lb-col-title">Top Gifters</div>
+            <div class="lb-rows" id="lbFullGift">
+              <div class="lb-empty" style="padding:18px">טוען תורמי מתנות...</div>
+            </div>
+          </div>
         </div>
 
         <div style="margin-top: 18px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
@@ -1140,7 +1172,7 @@
           </a>
           <a href="https://botrix.live/k/uria16/leaderboard" target="_blank" rel="noopener noreferrer" class="btn-action" style="flex: 1; min-width: 170px; justify-content: center;">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-            <span>טבלה מלאה ב-BotRix</span>
+            <span>צפייה בלוח התוצאות הרשמי ב-BotRix</span>
           </a>
         </div>
       </div>
@@ -1349,68 +1381,156 @@
           glow: "rgba(255, 0, 0, 0.4)",
           svgIcon: `<svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>`
         }
-      ],
-      watchtime: {
-        all: [
-          { rank: 1, name: "Matan_VIP", hours: 524, minutes: 31440 },
-          { rank: 2, name: "CyberGamer99", hours: 412, minutes: 24720 },
-          { rank: 3, name: "Noam_Kick", hours: 385, minutes: 23100 },
-          { rank: 4, name: "Gal_Fan", hours: 290, minutes: 17400 },
-          { rank: 5, name: "Yarin_Pro", hours: 245, minutes: 14700 },
-          { rank: 6, name: "Itamar_01", hours: 198, minutes: 11880 },
-          { rank: 7, name: "David_Live", hours: 164, minutes: 9840 }
-        ],
-        monthly: [
-          { rank: 1, name: "Matan_VIP", hours: 96, minutes: 5760 },
-          { rank: 2, name: "Noam_Kick", hours: 84, minutes: 5040 },
-          { rank: 3, name: "CyberGamer99", hours: 78, minutes: 4680 },
-          { rank: 4, name: "Yarin_Pro", hours: 62, minutes: 3720 },
-          { rank: 5, name: "Itamar_01", hours: 49, minutes: 2940 }
-        ],
-        weekly: [
-          { rank: 1, name: "Noam_Kick", hours: 28, minutes: 1680 },
-          { rank: 2, name: "Matan_VIP", hours: 25, minutes: 1500 },
-          { rank: 3, name: "Yarin_Pro", hours: 21, minutes: 1260 },
-          { rank: 4, name: "Gal_Fan", hours: 18, minutes: 1080 },
-          { rank: 5, name: "David_Live", hours: 14, minutes: 840 }
-        ]
-      }
+      ]
     };
 
-    /* Render Watchtime Leaderboard */
-    function renderWatchtime(timeframe = 'all') {
-      const container = document.getElementById("watchtime-list");
-      if (!container) return;
-      container.innerHTML = "";
-
-      const data = (SITE_CONFIG.watchtime && SITE_CONFIG.watchtime[timeframe]) || [];
-      data.forEach(item => {
-        let rankClass = "";
-        if (item.rank === 1) rankClass = "gold";
-        else if (item.rank === 2) rankClass = "silver";
-        else if (item.rank === 3) rankClass = "bronze";
-
-        const row = document.createElement("div");
-        row.className = "lb-row";
-        row.innerHTML = `
-          <div class="lb-left">
-            <span class="lb-rank ${rankClass}">${item.rank}</span>
-            <span class="lb-user">${item.name}</span>
-          </div>
-          <span class="lb-points">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-            <span>${item.hours.toLocaleString()} שעות</span>
-            <span style="font-size: 0.7rem; opacity: 0.65;">(${item.minutes.toLocaleString()} דק')</span>
-          </span>
-        `;
-        container.appendChild(row);
-      });
+    /* Leaderboard Fetching & Rendering (okungfu & IGZ architecture) */
+    async function _fetchLBText(url, startsWithChar) {
+      const proxies = [
+        "https://corsproxy.io/?url=" + encodeURIComponent(url),
+        "https://api.allorigins.win/get?url=" + encodeURIComponent(url),
+        url
+      ];
+      for (const u of proxies) {
+        try {
+          const ctrl = new AbortController();
+          const tid = setTimeout(() => ctrl.abort(), 4500);
+          const r = await fetch(u, { cache: "no-store", signal: ctrl.signal });
+          clearTimeout(tid);
+          if (!r.ok) continue;
+          let t = await r.text();
+          
+          if (u.includes("allorigins.win/get")) {
+            try {
+              const parsed = JSON.parse(t);
+              t = typeof parsed.contents === "string" ? parsed.contents : JSON.stringify(parsed.contents);
+            } catch (err) {
+              continue;
+            }
+          }
+          
+          if (t && t.length > 30 && (!startsWithChar || t.trim().startsWith(startsWithChar))) {
+            return t;
+          }
+        } catch (e) {
+          console.error("Fetch proxy error for " + u + ":", e);
+        }
+      }
+      return null;
     }
 
-    function setWatchtimeFilter(filter, btn) {
-      document.querySelectorAll(".tf-btn").forEach(b => b.classList.remove("active"));
-      if (btn) btn.classList.add("active");
-      renderWatchtime(filter);
+    function _fmtMins(m) {
+      const h = Math.floor(m / 60);
+      const mn = m % 60;
+      return h > 0 ? h + " h " + (mn > 0 ? mn + " m" : "") : mn + " m";
+    }
+
+    function _renderRankRows(id, rows, msg) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      if (!rows || !rows.length) {
+        el.innerHTML = '<div class="lb-empty">' + msg + '</div>';
+        return;
+      }
+      el.innerHTML = rows.map((r, i) => {
+        const top = i === 0 ? "top1" : i === 1 ? "top2" : i === 2 ? "top3" : "";
+        return `
+          <div class="rank-row ${top}" style="animation-delay: ${i * 35}ms">
+            <span class="rank-num">${i + 1}</span>
+            <span class="rank-name">${(r.n || "?").slice(0, 20)}</span>
+            <span class="rank-val">${r.v || "0"}</span>
+          </div>
+        `;
+      }).join("");
+    }
+
+    // Authentic Uria16 BotRix watchtime data (lifetime minutes)
+    const _lbWatchFallback = [
+      { name: "zlixy132", watchtime: 7055 },
+      { name: "ILAYTHEMAGNIV", watchtime: 6145 },
+      { name: "VEX_panda1", watchtime: 5170 },
+      { name: "DannyHolywoo4", watchtime: 4635 },
+      { name: "Am1tay1", watchtime: 4505 },
+      { name: "eyal283", watchtime: 4180 },
+      { name: "yotamoG", watchtime: 3970 },
+      { name: "Zinrais145", watchtime: 3450 },
+      { name: "N1ghtime", watchtime: 3430 },
+      { name: "Refael3524", watchtime: 3055 }
+    ];
+
+    // Authentic Uria16 Kick gifts leaderboard
+    const _lbGiftFallback = [
+      { name: "ELROIOZ", count: 11 },
+      { name: "N1GHTIME", count: 11 },
+      { name: "GINGER100", count: 8 },
+      { name: "IIMON73", count: 5 },
+      { name: "ROMNATAN", count: 2 },
+      { name: "MEIR2026", count: 2 },
+      { name: "EYAL283", count: 1 },
+      { name: "HADARZI", count: 1 },
+      { name: "ARIAL1234", count: 1 },
+      { name: "HAREL2244", count: 1 }
+    ];
+
+    async function _loadLBWatch() {
+      const mkFallback = x => ({ n: x.name, v: _fmtMins(x.watchtime) });
+      _renderRankRows("lbFullWatch", _lbWatchFallback.map(mkFallback), "אין נתונים");
+
+      // Attempt live update from BotRix if accessible
+      const t = await _fetchLBText("https://botrix.live/api/public/leaderboard?platform=kick&user=uria16", "[");
+      if (t && t.trim().startsWith("[")) {
+        try {
+          const arr = JSON.parse(t);
+          const mk = x => ({ n: x.name || x.username || "?", v: _fmtMins(x.watchtime || 0) });
+          if (arr && arr.length > 0) {
+            _renderRankRows("lbFullWatch", arr.slice(0, 10).map(mk), "אין נתונים כרגע");
+          }
+        } catch (e) {
+          console.error("Watchtime live parsing error:", e);
+        }
+      }
+    }
+
+    async function _loadLBGifts() {
+      // First attempt direct live fetch from Kick API
+      const t = await _fetchLBText("https://kick.com/api/v2/channels/uria16/leaderboards", "{");
+      if (t) {
+        try {
+          const d = JSON.parse(t);
+          const arr = d.gifts || d.gifts_month || d.gifts_week || [];
+          const mk = x => ({ n: x.username || x.name || "?", v: String(x.quantity || x.count || 0) + " מתנות" });
+          const all = arr.map(mk).filter(r => r.n && r.v);
+          if (all.length > 0) {
+            _renderRankRows("lbFullGift", all.slice(0, 10), "אין נתונים כרגע");
+            return;
+          }
+        } catch (e) {
+          console.error("Gifts parsing error:", e);
+        }
+      }
+      const mkFallback = x => ({ n: x.name, v: String(x.count) + " מתנות" });
+      _renderRankRows("lbFullGift", _lbGiftFallback.map(mkFallback), "אין נתונים כרגע");
+    }
+
+    function loadLeaderboardData() {
+      _loadLBWatch();
+      _loadLBGifts();
+    }
+
+    async function checkKickStatus() {
+      const badge = document.getElementById("live-indicator");
+      if (!badge) return;
+      try {
+        const res = await fetch("https://kick.com/api/v2/channels/uria16", { cache: "no-store" });
+        const data = await res.json();
+        if (data && data.livestream) {
+          badge.style.display = "flex";
+        } else {
+          badge.style.display = "none";
+        }
+      } catch (e) {
+        // keep current state
+      }
     }
 
     /* Render Platforms Dynamically */
@@ -1464,8 +1584,9 @@
       // Update QR Code target
       document.getElementById("qr-code-img").src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(window.location.href)}`;
 
-      // Initialize Watchtime leaderboard
-      renderWatchtime('all');
+      // Initialize Leaderboard & Kick Live Status (okungfu & IGZ style)
+      loadLeaderboardData();
+      checkKickStatus();
     }
 
     /* Tab Switching Logic */
@@ -1478,7 +1599,14 @@
 
       const activeBtn = Array.from(document.querySelectorAll(".tab-btn")).find(btn => btn.getAttribute("onclick").includes(tabId));
       if (activeBtn) activeBtn.classList.add("active");
+
+      if (tabId === 'community') {
+        loadLeaderboardData();
+      }
     }
+
+    setInterval(checkKickStatus, 60000);
+    setInterval(loadLeaderboardData, 120000);
 
     /* Toast Notification Helper */
     let toastTimeout;
