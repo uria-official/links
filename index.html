@@ -1,0 +1,1581 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Uria | Official Portal</title>
+  <meta name="description" content="העמוד הרשמי של Uria - כל הקישורים, הרשתות החברתיות, שידורים חיים וקהילה במקום אחד.">
+  <link rel="icon" type="image/png" href="pfp.png">
+
+  <!-- Google Fonts: Heebo (with Birzia prioritized locally if installed) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-base: #060b08;
+      --bg-surface: rgba(12, 28, 18, 0.55);
+      --bg-surface-hover: rgba(18, 42, 28, 0.75);
+      --border-subtle: rgba(34, 197, 94, 0.22);
+      --border-glow: rgba(74, 222, 128, 0.65);
+      
+      --accent-green: #22c55e;
+      --accent-neon: #4ade80;
+      --accent-emerald: #10b981;
+      --accent-mint: #86efac;
+      --accent-cyan: #06b6d4;
+      --live-green: #22c55e;
+      
+      --text-main: #ffffff;
+      --text-muted: rgba(255, 255, 255, 0.68);
+      --text-dim: rgba(255, 255, 255, 0.42);
+
+      --font-family: 'Birzia', 'Heebo', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-scale: 100%;
+      --line-height: 1.45;
+      --letter-spacing: 0px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      font-size: var(--font-scale);
+      scroll-behavior: smooth;
+      background-color: var(--bg-base);
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: var(--font-family);
+      color: var(--text-main);
+      background-color: var(--bg-base);
+      line-height: var(--line-height);
+      letter-spacing: var(--letter-spacing);
+      overflow-x: hidden;
+      overflow-y: auto;
+      position: relative;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Ambient Aurora Mesh Background */
+    .ambient-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -2;
+      overflow: hidden;
+    }
+
+    .ambient-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(110px);
+      opacity: 0.35;
+      animation: orbFloat 22s ease-in-out infinite alternate;
+    }
+
+    .orb-1 {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, var(--accent-emerald) 0%, transparent 70%);
+      top: -150px;
+      right: -100px;
+    }
+
+    .orb-2 {
+      width: 450px;
+      height: 450px;
+      background: radial-gradient(circle, var(--accent-neon) 0%, transparent 70%);
+      bottom: -100px;
+      left: -100px;
+      animation-duration: 26s;
+      animation-delay: -5s;
+    }
+
+    .orb-3 {
+      width: 380px;
+      height: 380px;
+      background: radial-gradient(circle, var(--accent-cyan) 0%, transparent 70%);
+      top: 40%;
+      left: 20%;
+      animation-duration: 18s;
+      animation-delay: -10s;
+    }
+
+    @keyframes orbFloat {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(40px, 60px) scale(1.12); }
+      100% { transform: translate(-30px, -40px) scale(0.92); }
+    }
+
+    /* Cyber Cyberpunk Grid Texture */
+    .grid-overlay {
+      position: fixed;
+      inset: 0;
+      background-image: 
+        linear-gradient(to right, rgba(34, 197, 94, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(34, 197, 94, 0.05) 1px, transparent 1px);
+      background-size: 40px 40px;
+      mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
+      -webkit-mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* Interactive Spotlight cursor glow */
+    #cursor-spotlight {
+      position: fixed;
+      width: 450px;
+      height: 450px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(34, 197, 94, 0.14) 0%, rgba(74, 222, 128, 0.04) 40%, transparent 70%);
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 0;
+      mix-blend-mode: screen;
+      transition: opacity 0.3s;
+    }
+
+    /* Layout Container */
+    .app-container {
+      width: 100%;
+      max-width: 580px;
+      margin: 0 auto;
+      padding: 40px 20px 100px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Header Profile Card */
+    .profile-hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 28px;
+      width: 100%;
+    }
+
+    .avatar-wrapper {
+      position: relative;
+      width: 110px;
+      height: 110px;
+      margin-bottom: 18px;
+      cursor: pointer;
+    }
+
+    .avatar-halo {
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-neon), var(--accent-emerald), var(--accent-cyan));
+      animation: rotateHalo 6s linear infinite;
+      box-shadow: 0 0 25px rgba(34, 197, 94, 0.55);
+      z-index: 1;
+    }
+
+    @keyframes rotateHalo {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .avatar-img {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center 20%;
+      border: 3px solid var(--bg-base);
+      z-index: 2;
+      background: #08160e;
+      display: block;
+    }
+
+    .avatar-badge-live {
+      position: absolute;
+      bottom: -3px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--live-green);
+      color: #032b1a;
+      font-size: 0.65rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      padding: 2px 10px;
+      border-radius: 20px;
+      border: 2px solid var(--bg-base);
+      box-shadow: 0 0 14px rgba(34, 197, 94, 0.85);
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      text-transform: uppercase;
+    }
+
+    .live-pulse-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #032b1a;
+      animation: livePulse 1.2s infinite ease-in-out;
+    }
+
+    @keyframes livePulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(1.4); }
+    }
+
+    .creator-name {
+      font-size: 2.1rem;
+      font-weight: 900;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-shadow: 0 0 15px rgba(34, 197, 94, 0.6);
+      margin-bottom: 4px;
+    }
+
+    .verified-icon {
+      color: var(--accent-cyan);
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .creator-handle {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--accent-neon);
+      margin-bottom: 8px;
+      direction: ltr;
+    }
+
+    .creator-bio {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      max-width: 400px;
+      line-height: 1.5;
+      margin-bottom: 18px;
+    }
+
+    /* Action Buttons Row */
+    .hero-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-action {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      padding: 8px 16px;
+      border-radius: 12px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      cursor: pointer;
+      backdrop-filter: blur(12px);
+      transition: all 0.22s ease;
+      text-decoration: none;
+    }
+
+    .btn-action:hover {
+      background: var(--bg-surface-hover);
+      border-color: var(--border-glow);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 18px rgba(34, 197, 94, 0.35);
+    }
+
+    .btn-action.highlight {
+      background: linear-gradient(135deg, var(--accent-emerald), var(--accent-green));
+      border-color: transparent;
+      color: #042111;
+      font-weight: 900;
+      box-shadow: 0 0 20px rgba(34, 197, 94, 0.5);
+    }
+
+    .btn-action.highlight:hover {
+      box-shadow: 0 0 30px rgba(74, 222, 128, 0.75);
+    }
+
+    /* Navigation Tabs Dock */
+    .tabs-dock {
+      display: flex;
+      background: rgba(10, 22, 14, 0.78);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 4px;
+      gap: 4px;
+      margin-bottom: 24px;
+      width: 100%;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 9px 12px;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.35), rgba(6, 182, 212, 0.25));
+      border: 1px solid rgba(74, 222, 128, 0.45);
+      color: var(--text-main);
+      box-shadow: 0 0 15px rgba(34, 197, 94, 0.3);
+    }
+
+    .tab-btn:hover:not(.active) {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    /* Tab Sections */
+    .tab-content {
+      display: none;
+      width: 100%;
+    }
+
+    .tab-content.active {
+      display: block;
+      animation: tabFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    @keyframes tabFadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Platform Link Cards */
+    .links-feed {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .platform-card {
+      position: relative;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      text-decoration: none;
+      color: var(--text-main);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+      transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow: hidden;
+    }
+
+    .platform-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.03), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .platform-card:hover {
+      transform: translateY(-4px) scale(1.01);
+      border-color: var(--platform-accent, var(--border-glow));
+      background: var(--bg-surface-hover);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4), 0 0 25px var(--platform-glow, rgba(34, 197, 94, 0.25));
+    }
+
+    .platform-card:hover::before {
+      opacity: 1;
+    }
+
+    .card-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+      flex: 1;
+    }
+
+    .platform-icon-box {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--platform-accent, var(--text-main));
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      transition: transform 0.28s;
+    }
+
+    .platform-card:hover .platform-icon-box {
+      transform: scale(1.08) rotate(3deg);
+      border-color: var(--platform-accent, var(--border-glow));
+    }
+
+    .platform-icon-box svg {
+      width: 24px;
+      height: 24px;
+      fill: currentColor;
+    }
+
+    .card-text {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .card-title-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-title {
+      font-size: 1.08rem;
+      font-weight: 800;
+      color: var(--text-main);
+      text-shadow: 0 0 12px var(--platform-glow, transparent);
+    }
+
+    .card-badge {
+      font-size: 0.65rem;
+      font-weight: 800;
+      padding: 1px 7px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--platform-accent, var(--text-muted));
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      text-transform: uppercase;
+    }
+
+    .card-badge.live-tag {
+      background: rgba(16, 185, 129, 0.18);
+      color: var(--live-green);
+      border-color: var(--live-green);
+      box-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
+    }
+
+    .card-desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 3px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .btn-icon-action {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-icon-action:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: var(--text-main);
+      border-color: var(--text-main);
+      transform: scale(1.05);
+    }
+
+    .arrow-icon {
+      color: var(--text-dim);
+      transition: transform 0.2s, color 0.2s;
+    }
+
+    .platform-card:hover .arrow-icon {
+      transform: translateX(-4px);
+      color: var(--text-main);
+    }
+
+    /* Community & Leaderboard Section */
+    .community-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 24px 20px;
+      backdrop-filter: blur(20px);
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .community-header-title {
+      font-size: 1.3rem;
+      font-weight: 900;
+      margin-bottom: 6px;
+      color: var(--text-main);
+      text-shadow: 0 0 15px var(--accent-neon);
+    }
+
+    .community-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    .leaderboard-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .lb-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      padding: 10px 14px;
+      transition: all 0.2s;
+    }
+
+    .lb-row:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: var(--border-subtle);
+    }
+
+    .lb-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .lb-rank {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      font-size: 0.75rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lb-rank.gold { background: #ffd700; color: #111; box-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+    .lb-rank.silver { background: #c0c0c0; color: #111; box-shadow: 0 0 10px rgba(192, 192, 192, 0.5); }
+    .lb-rank.bronze { background: #cd7f32; color: #111; box-shadow: 0 0 10px rgba(205, 127, 50, 0.5); }
+
+    .lb-user {
+      font-weight: 700;
+      font-size: 0.88rem;
+    }
+
+    .lb-points {
+      font-weight: 800;
+      font-size: 0.82rem;
+      color: var(--accent-mint);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    /* Timeframe Selector Dock */
+    .timeframe-dock {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 16px;
+      background: rgba(0, 0, 0, 0.28);
+      padding: 4px;
+      border-radius: 12px;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .tf-btn {
+      flex: 1;
+      padding: 6px 12px;
+      background: transparent;
+      border: none;
+      border-radius: 8px;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .tf-btn.active {
+      background: rgba(34, 197, 94, 0.22);
+      color: var(--accent-neon);
+      border: 1px solid rgba(74, 222, 128, 0.4);
+      box-shadow: 0 0 10px rgba(34, 197, 94, 0.25);
+    }
+
+    .tf-btn:hover:not(.active) {
+      color: #fff;
+    }
+
+    /* Kick Commands Helper Box */
+    .commands-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .command-pill {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(74, 222, 128, 0.18);
+      border-radius: 14px;
+      padding: 10px 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .command-pill:hover {
+      background: rgba(34, 197, 94, 0.08);
+      border-color: var(--accent-neon);
+      transform: translateY(-2px);
+    }
+
+    .cmd-text {
+      display: flex;
+      flex-direction: column;
+      text-align: right;
+    }
+
+    .cmd-tag {
+      font-family: monospace;
+      font-weight: 900;
+      font-size: 0.95rem;
+      color: var(--accent-neon);
+      direction: ltr;
+      display: inline-block;
+    }
+
+    .cmd-desc {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+    }
+
+    .btn-copy-cmd {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-muted);
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .command-pill:hover .btn-copy-cmd {
+      background: var(--accent-neon);
+      color: #042111;
+      border-color: var(--accent-neon);
+    }
+
+    /* About & Contact Section */
+    .info-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 20px;
+      backdrop-filter: blur(20px);
+      margin-bottom: 14px;
+    }
+
+    .info-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-main);
+      text-shadow: 0 0 10px var(--accent-neon);
+    }
+
+    .info-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 36px;
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 16px;
+    }
+
+    .footer-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+      cursor: pointer;
+    }
+
+    .footer-link:hover {
+      color: var(--text-main);
+      text-shadow: 0 0 8px var(--accent-neon);
+    }
+
+    /* Floating Accessibility Button & Modal */
+    #a11y-trigger {
+      position: fixed;
+      left: 20px;
+      bottom: 20px;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: rgba(10, 24, 15, 0.88);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      backdrop-filter: blur(14px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 100;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+      transition: all 0.25s;
+    }
+
+    #a11y-trigger:hover {
+      transform: scale(1.08);
+      border-color: var(--border-glow);
+      box-shadow: 0 0 20px rgba(34, 197, 94, 0.5);
+    }
+
+    #a11y-drawer {
+      position: fixed;
+      left: 20px;
+      bottom: 78px;
+      width: min(320px, calc(100vw - 40px));
+      background: rgba(8, 20, 13, 0.96);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 20px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+      z-index: 99;
+      display: none;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    #a11y-drawer.open {
+      display: flex;
+      animation: tabFadeIn 0.25s ease both;
+    }
+
+    .a11y-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 800;
+      font-size: 1rem;
+    }
+
+    .a11y-close {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 1.1rem;
+    }
+
+    .a11y-control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .a11y-label {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      font-weight: 600;
+    }
+
+    .a11y-slider {
+      width: 100%;
+      accent-color: var(--accent-neon);
+    }
+
+    .a11y-toggle-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-main);
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .a11y-toggle-btn.active, .a11y-toggle-btn:hover {
+      background: linear-gradient(135deg, var(--accent-emerald), var(--accent-green));
+      border-color: transparent;
+      color: #042111;
+      font-weight: 900;
+    }
+
+    /* Reading Guide ruler */
+    #reading-ruler {
+      position: fixed;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--accent-neon);
+      box-shadow: 0 0 12px var(--accent-neon);
+      z-index: 9999;
+      display: none;
+      pointer-events: none;
+      top: 50%;
+    }
+
+    /* Accessibility Classes */
+    body.high-contrast {
+      --bg-base: #000000 !important;
+      --bg-surface: #111111 !important;
+      --text-main: #ffffff !important;
+      --text-muted: #dddddd !important;
+      --border-subtle: #ffffff !important;
+    }
+
+    body.high-contrast .ambient-bg,
+    body.high-contrast .grid-overlay,
+    body.high-contrast #cursor-spotlight {
+      display: none !important;
+    }
+
+    body.grayscale-mode {
+      filter: grayscale(100%);
+    }
+
+    body.pause-animations * {
+      animation: none !important;
+      transition: none !important;
+    }
+
+    /* Toast Notification */
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: rgba(10, 24, 15, 0.95);
+      border: 1px solid var(--accent-neon);
+      color: var(--text-main);
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(34, 197, 94, 0.4);
+      z-index: 1000;
+      backdrop-filter: blur(16px);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    #toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Share Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(10px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+      animation: modalIn 0.25s ease both;
+    }
+
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .modal-card {
+      background: rgba(10, 24, 15, 0.96);
+      border: 1px solid var(--border-glow);
+      border-radius: 24px;
+      padding: 28px;
+      width: 100%;
+      max-width: 360px;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(34, 197, 94, 0.35);
+      position: relative;
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    .modal-qr-box {
+      background: #ffffff;
+      padding: 16px;
+      border-radius: 16px;
+      width: 180px;
+      height: 180px;
+      margin: 16px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-qr-box img {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Responsive Queries */
+    @media (max-width: 480px) {
+      .app-container {
+        padding: 30px 14px 90px;
+      }
+      .creator-name {
+        font-size: 1.85rem;
+      }
+      .avatar-wrapper {
+        width: 96px;
+        height: 96px;
+      }
+      .platform-card {
+        padding: 14px 15px;
+      }
+      .platform-icon-box {
+        width: 42px;
+        height: 42px;
+      }
+      .card-title {
+        font-size: 0.98rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Ambience -->
+  <div class="ambient-bg">
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+    <div class="ambient-orb orb-3"></div>
+  </div>
+  <div class="grid-overlay"></div>
+  <div id="cursor-spotlight"></div>
+  <div id="reading-ruler"></div>
+
+  <!-- App Main Content -->
+  <main class="app-container">
+
+    <!-- Profile Hero -->
+    <header class="profile-hero">
+      <div class="avatar-wrapper" onclick="openShareModal()" title="לחץ לשיתוף פרופיל">
+        <div class="avatar-halo"></div>
+        <img id="creator-avatar" class="avatar-img" src="pfp.png" alt="Uria Profile Picture">
+        <div id="live-indicator" class="avatar-badge-live">
+          <span class="live-pulse-dot"></span>
+          <span>לייב עכשיו</span>
+        </div>
+      </div>
+
+      <h1 class="creator-name" id="creator-name">
+        Uria
+        <span class="verified-icon" title="מאומת">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
+        </span>
+      </h1>
+
+      <div class="creator-handle" id="creator-handle">@Uria16</div>
+      <p class="creator-bio" id="creator-bio">💫 כאן כל הקישורים של אוריה! תעקבו, תשתפו ותשאירו עוקב! 🎉</p>
+
+      <div class="hero-actions">
+        <a id="btn-watch-live" href="https://kick.com/uria16" target="_blank" rel="noopener noreferrer" class="btn-action highlight">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          <span>צפה בשידור חי ב-Kick</span>
+        </a>
+        <button class="btn-action" onclick="openShareModal()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+          <span>שיתוף</span>
+        </button>
+        <button class="btn-action" onclick="copyProfileUrl()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>העתק קישור</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Navigation Tabs Dock -->
+    <nav class="tabs-dock" aria-label="ניווט ראשי">
+      <button class="tab-btn active" onclick="switchTab('links')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+        <span>קישורים</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('community')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+        <span>Watchtime</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('about')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+        <span>מידע וקשר</span>
+      </button>
+    </nav>
+
+    <!-- TAB 1: Links / Platforms -->
+    <section id="tab-links" class="tab-content active">
+      <div class="links-feed" id="platforms-container">
+        <!-- Rendered dynamically from SITE_CONFIG -->
+      </div>
+    </section>
+
+    <!-- TAB 2: Kick Watchtime Leaderboard -->
+    <section id="tab-community" class="tab-content">
+      <div class="community-card">
+        <div style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; background: rgba(34, 197, 94, 0.12); border: 1px solid rgba(74, 222, 128, 0.35); border-radius: 20px; color: var(--accent-neon); font-size: 0.75rem; font-weight: 800; margin-bottom: 12px; text-transform: uppercase;">
+          <span style="width: 7px; height: 7px; border-radius: 50%; background: var(--accent-neon); box-shadow: 0 0 8px var(--accent-neon);"></span>
+          <span>Kick Watchtime</span>
+        </div>
+
+        <h2 class="community-header-title">מובילי זמן צפייה בערוץ</h2>
+        <p class="community-subtitle">דירוג הצופים עם הכי הרבה שעות צפייה בערוץ ה-Kick של אוריה</p>
+
+        <!-- Timeframe selector -->
+        <div class="timeframe-dock">
+          <button class="tf-btn active" onclick="setWatchtimeFilter('all', this)">כל הזמנים</button>
+          <button class="tf-btn" onclick="setWatchtimeFilter('monthly', this)">החודש</button>
+          <button class="tf-btn" onclick="setWatchtimeFilter('weekly', this)">השבוע</button>
+        </div>
+
+        <div class="leaderboard-list" id="watchtime-list">
+          <!-- Rendered dynamically from SITE_CONFIG.watchtime -->
+        </div>
+
+        <div style="margin-top: 18px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+          <a href="https://kick.com/uria16" target="_blank" rel="noopener noreferrer" class="btn-action highlight" style="flex: 1; min-width: 170px; justify-content: center;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+            <span>צפה עכשיו ב-Kick</span>
+          </a>
+          <a href="https://botrix.live/k/uria16/leaderboard" target="_blank" rel="noopener noreferrer" class="btn-action" style="flex: 1; min-width: 170px; justify-content: center;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            <span>טבלה מלאה ב-BotRix</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Kick Chat Commands for Watchtime -->
+      <div class="info-box">
+        <h3 class="info-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+          <span>פקודות זמן צפייה בצ'אט</span>
+        </h3>
+        <p class="info-desc">רוצה לדעת כמה זמן צפייה צברת? שלח בצ'אט ב-Kick או לחץ להעתקה:</p>
+
+        <div class="commands-grid">
+          <div class="command-pill" onclick="copyText('!watchtime', 'הפקודה !watchtime הועתקה!')" title="לחץ להעתקת הפקודה">
+            <div class="cmd-text">
+              <span class="cmd-tag">!watchtime</span>
+              <span class="cmd-desc">בדיקת זמן הצפייה האישי שלך</span>
+            </div>
+            <button class="btn-copy-cmd" aria-label="Copy !watchtime">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            </button>
+          </div>
+
+          <div class="command-pill" onclick="copyText('!top', 'הפקודה !top הועתקה!')" title="לחץ להעתקת הפקודה">
+            <div class="cmd-text">
+              <span class="cmd-tag">!top</span>
+              <span class="cmd-desc">הצגת מובילי זמן הצפייה בצ'אט</span>
+            </div>
+            <button class="btn-copy-cmd" aria-label="Copy !top">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: About & Contact -->
+    <section id="tab-about" class="tab-content">
+      <div class="info-box">
+        <h3 class="info-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          <span>יצירת קשר ושיתופי פעולה</span>
+        </h3>
+        <p class="info-desc">לפניות, שאלות ושיתופי פעולה ניתן לפנות בשרת הדיסקורד או בעמוד האינסטגרם הרשמי:</p>
+        <a href="https://discord.gg/ayfbUwNAaa" target="_blank" rel="noopener noreferrer" class="btn-action highlight" style="width: 100%; justify-content: center; text-decoration: none; margin-bottom: 8px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.894.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+          <span>הצטרפות לשרת הדיסקורד</span>
+        </a>
+      </div>
+
+      <div class="info-box">
+        <h3 class="info-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          <span>לוח שידורים ופעילות</span>
+        </h3>
+        <p class="info-desc">שידורים חיים ואירועי קהילה שבועיים. לפרטים ועדכונים שוטפים כנסו לערוץ הדיסקורד.</p>
+      </div>
+    </section>
+
+    <!-- Global Footer -->
+    <footer>
+      <div class="footer-links">
+        <a class="footer-link" onclick="openShareModal()">שתף</a>
+        <span>•</span>
+        <a class="footer-link" onclick="switchTab('about')">קשר עסקי</a>
+        <span>•</span>
+        <a class="footer-link" onclick="toggleA11yDrawer()">נגישות</a>
+      </div>
+      <div>© 2026 Uria. כל הזכויות שמורות.</div>
+    </footer>
+
+  </main>
+
+  <!-- Accessibility Trigger & Drawer -->
+  <button id="a11y-trigger" onclick="toggleA11yDrawer()" aria-label="תפריט נגישות" title="תפריט נגישות">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"></circle>
+      <path d="m4.93 4.93 4.24 4.24"></path>
+      <path d="m14.83 9.17 4.24-4.24"></path>
+      <path d="m14.83 14.83 4.24 4.24"></path>
+      <path d="m9.17 14.83-4.24 4.24"></path>
+      <circle cx="12" cy="12" r="4"></circle>
+    </svg>
+  </button>
+
+  <div id="a11y-drawer">
+    <div class="a11y-header">
+      <span>הגדרות נגישות</span>
+      <button class="a11y-close" onclick="toggleA11yDrawer()">✕</button>
+    </div>
+
+    <div class="a11y-control-group">
+      <div class="a11y-label">
+        <span>גודל טקסט</span>
+        <span id="font-scale-val">100%</span>
+      </div>
+      <input type="range" class="a11y-slider" min="80" max="140" value="100" step="5" oninput="setFontScale(this.value)">
+    </div>
+
+    <div class="a11y-control-group">
+      <div class="a11y-label">
+        <span>מרווח שורות</span>
+        <span id="line-height-val">1.45</span>
+      </div>
+      <input type="range" class="a11y-slider" min="1.2" max="2.2" value="1.45" step="0.1" oninput="setLineHeight(this.value)">
+    </div>
+
+    <button class="a11y-toggle-btn" id="btn-contrast" onclick="toggleContrast()">ניגודיות גבוהה</button>
+    <button class="a11y-toggle-btn" id="btn-grayscale" onclick="toggleGrayscale()">גווני אפור</button>
+    <button class="a11y-toggle-btn" id="btn-ruler" onclick="toggleReadingRuler()">סרגל קריאה</button>
+    <button class="a11y-toggle-btn" id="btn-motion" onclick="toggleAnimations()">עצירת תנועה</button>
+  </div>
+
+  <!-- Share / QR Code Modal -->
+  <div id="share-modal" class="modal-overlay" onclick="closeShareModal(event)">
+    <div class="modal-card" onclick="event.stopPropagation()">
+      <button class="modal-close-btn" onclick="closeShareModal()">✕</button>
+      <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 6px;">שתף את הפרופיל</h3>
+      <p style="font-size: 0.85rem; color: var(--text-muted);">סרוק את הברקוד בנייד או העתק קישור</p>
+
+      <div class="modal-qr-box">
+        <img id="qr-code-img" src="" alt="QR Code">
+      </div>
+
+      <button class="btn-action highlight" style="width: 100%; justify-content: center;" onclick="copyProfileUrl()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+        <span>העתק קישור ישיר</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Toast Element -->
+  <div id="toast">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+    <span id="toast-message">הקישור הועתק בהצלחה!</span>
+  </div>
+
+  <!-- JavaScript Configuration & Interactivity -->
+  <script>
+    /* ==========================================================
+       SITE CONFIGURATION - DROP URIA'S PFP & LINKS HERE!
+       ========================================================== */
+    const SITE_CONFIG = {
+      creator: {
+        name: "Uria",
+        handle: "@Uria16",
+        bio: "💫 כאן כל הקישורים של אוריה! תעקבו, תשתפו ותשאירו עוקב! 🎉",
+        avatar: "pfp.png",
+        isLive: true,
+        livePlatform: "Kick",
+        liveUrl: "https://kick.com/uria16"
+      },
+      platforms: [
+        {
+          id: "kick",
+          name: "Kick",
+          handle: "kick.com/uria16",
+          desc: "שידורים חיים כל שבוע ואינטראקציה בצ'אט",
+          url: "https://kick.com/uria16",
+          badge: "LIVE NOW",
+          color: "#53fc18",
+          glow: "rgba(83, 252, 24, 0.45)",
+          svgIcon: `<svg viewBox="0 0 24 24"><path d="M3 3h5v5h3v-3h5v5h-3v3h3v5h-5v-3h-3v3h-5v-15z"/></svg>`
+        },
+        {
+          id: "discord",
+          name: "Discord",
+          handle: "discord.gg/ayfbUwNAaa",
+          desc: "שרת הדיסקורד הרשמי • חדרים, קהילה ועדכונים",
+          url: "https://discord.gg/ayfbUwNAaa",
+          badge: "Community",
+          color: "#5865F2",
+          glow: "rgba(88, 101, 242, 0.45)",
+          svgIcon: `<svg viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.894.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>`
+        },
+        {
+          id: "tiktok",
+          name: "TikTok",
+          handle: "@jewish498",
+          desc: "קליפים קצרים, רגעים מצחיקים וסרטונים ויראליים",
+          url: "https://www.tiktok.com/@jewish498",
+          badge: "Clips",
+          color: "#00f2fe",
+          glow: "rgba(0, 242, 254, 0.4)",
+          svgIcon: `<svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.24 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>`
+        },
+        {
+          id: "instagram",
+          name: "Instagram",
+          handle: "@uria.16",
+          desc: "סטוריז יומיים, תמונות בלעדיות ועדכונים שוטפים",
+          url: "https://www.instagram.com/uria.16",
+          badge: "Stories",
+          color: "#e1306c",
+          glow: "rgba(225, 48, 108, 0.45)",
+          svgIcon: `<svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>`
+        },
+        {
+          id: "youtube",
+          name: "YouTube",
+          handle: "@UriaLive",
+          desc: "סרטונים, לייבים והיילייטס שבועיים",
+          url: "https://www.youtube.com/@UriaLive",
+          badge: "Videos",
+          color: "#ff0000",
+          glow: "rgba(255, 0, 0, 0.4)",
+          svgIcon: `<svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>`
+        }
+      ],
+      watchtime: {
+        all: [
+          { rank: 1, name: "Matan_VIP", hours: 524, minutes: 31440 },
+          { rank: 2, name: "CyberGamer99", hours: 412, minutes: 24720 },
+          { rank: 3, name: "Noam_Kick", hours: 385, minutes: 23100 },
+          { rank: 4, name: "Gal_Fan", hours: 290, minutes: 17400 },
+          { rank: 5, name: "Yarin_Pro", hours: 245, minutes: 14700 },
+          { rank: 6, name: "Itamar_01", hours: 198, minutes: 11880 },
+          { rank: 7, name: "David_Live", hours: 164, minutes: 9840 }
+        ],
+        monthly: [
+          { rank: 1, name: "Matan_VIP", hours: 96, minutes: 5760 },
+          { rank: 2, name: "Noam_Kick", hours: 84, minutes: 5040 },
+          { rank: 3, name: "CyberGamer99", hours: 78, minutes: 4680 },
+          { rank: 4, name: "Yarin_Pro", hours: 62, minutes: 3720 },
+          { rank: 5, name: "Itamar_01", hours: 49, minutes: 2940 }
+        ],
+        weekly: [
+          { rank: 1, name: "Noam_Kick", hours: 28, minutes: 1680 },
+          { rank: 2, name: "Matan_VIP", hours: 25, minutes: 1500 },
+          { rank: 3, name: "Yarin_Pro", hours: 21, minutes: 1260 },
+          { rank: 4, name: "Gal_Fan", hours: 18, minutes: 1080 },
+          { rank: 5, name: "David_Live", hours: 14, minutes: 840 }
+        ]
+      }
+    };
+
+    /* Render Watchtime Leaderboard */
+    function renderWatchtime(timeframe = 'all') {
+      const container = document.getElementById("watchtime-list");
+      if (!container) return;
+      container.innerHTML = "";
+
+      const data = (SITE_CONFIG.watchtime && SITE_CONFIG.watchtime[timeframe]) || [];
+      data.forEach(item => {
+        let rankClass = "";
+        if (item.rank === 1) rankClass = "gold";
+        else if (item.rank === 2) rankClass = "silver";
+        else if (item.rank === 3) rankClass = "bronze";
+
+        const row = document.createElement("div");
+        row.className = "lb-row";
+        row.innerHTML = `
+          <div class="lb-left">
+            <span class="lb-rank ${rankClass}">${item.rank}</span>
+            <span class="lb-user">${item.name}</span>
+          </div>
+          <span class="lb-points">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <span>${item.hours.toLocaleString()} שעות</span>
+            <span style="font-size: 0.7rem; opacity: 0.65;">(${item.minutes.toLocaleString()} דק')</span>
+          </span>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    function setWatchtimeFilter(filter, btn) {
+      document.querySelectorAll(".tf-btn").forEach(b => b.classList.remove("active"));
+      if (btn) btn.classList.add("active");
+      renderWatchtime(filter);
+    }
+
+    /* Render Platforms Dynamically */
+    function initApp() {
+      const container = document.getElementById("platforms-container");
+      container.innerHTML = "";
+
+      SITE_CONFIG.platforms.forEach(platform => {
+        const card = document.createElement("a");
+        card.href = platform.url;
+        card.target = "_blank";
+        card.rel = "noopener noreferrer";
+        card.className = "platform-card";
+        card.style.setProperty("--platform-accent", platform.color);
+        card.style.setProperty("--platform-glow", platform.glow);
+
+        const isLiveBadge = platform.badge === "LIVE NOW" ? "live-tag" : "";
+
+        card.innerHTML = `
+          <div class="card-left">
+            <div class="platform-icon-box">
+              ${platform.svgIcon}
+            </div>
+            <div class="card-text">
+              <div class="card-title-row">
+                <span class="card-title">${platform.name}</span>
+                <span class="card-badge ${isLiveBadge}">${platform.badge}</span>
+              </div>
+              <span class="card-desc">${platform.desc}</span>
+            </div>
+          </div>
+          <div class="card-right">
+            <button class="btn-icon-action" title="העתק קישור" onclick="event.preventDefault(); copyText('${platform.url}', 'קישור ל-${platform.name} הועתק!')">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            </button>
+            <span class="arrow-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </span>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+
+      // Update Creator Info
+      document.getElementById("creator-name").firstChild.textContent = SITE_CONFIG.creator.name + " ";
+      document.getElementById("creator-handle").textContent = SITE_CONFIG.creator.handle;
+      document.getElementById("creator-bio").textContent = SITE_CONFIG.creator.bio;
+      document.getElementById("creator-avatar").src = SITE_CONFIG.creator.avatar;
+      document.getElementById("btn-watch-live").href = SITE_CONFIG.creator.liveUrl;
+
+      // Update QR Code target
+      document.getElementById("qr-code-img").src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(window.location.href)}`;
+
+      // Initialize Watchtime leaderboard
+      renderWatchtime('all');
+    }
+
+    /* Tab Switching Logic */
+    function switchTab(tabId) {
+      document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
+      document.querySelectorAll(".tab-content").forEach(content => content.classList.remove("active"));
+
+      const targetSection = document.getElementById(`tab-${tabId}`);
+      if (targetSection) targetSection.classList.add("active");
+
+      const activeBtn = Array.from(document.querySelectorAll(".tab-btn")).find(btn => btn.getAttribute("onclick").includes(tabId));
+      if (activeBtn) activeBtn.classList.add("active");
+    }
+
+    /* Toast Notification Helper */
+    let toastTimeout;
+    function showToast(msg) {
+      const toast = document.getElementById("toast");
+      document.getElementById("toast-message").textContent = msg;
+      toast.classList.add("show");
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove("show");
+      }, 2400);
+    }
+
+    function copyText(text, successMsg = "הועתק ללוח!") {
+      navigator.clipboard.writeText(text).then(() => {
+        showToast(successMsg);
+      }).catch(() => {
+        showToast("ההעתקה נכשלה");
+      });
+    }
+
+    function copyProfileUrl() {
+      copyText(window.location.href, "קישור הפרופיל הועתק בהצלחה!");
+    }
+
+    /* Share Modal Controls */
+    function openShareModal() {
+      document.getElementById("share-modal").classList.add("open");
+    }
+
+    function closeShareModal(event) {
+      if (!event || event.target.id === "share-modal" || event.target.classList.contains("modal-close-btn")) {
+        document.getElementById("share-modal").classList.remove("open");
+      }
+    }
+
+    /* Accessibility Drawer & Controls */
+    function toggleA11yDrawer() {
+      const drawer = document.getElementById("a11y-drawer");
+      drawer.classList.toggle("open");
+    }
+
+    function setFontScale(val) {
+      document.documentElement.style.setProperty("--font-scale", val + "%");
+      document.getElementById("font-scale-val").textContent = val + "%";
+    }
+
+    function setLineHeight(val) {
+      document.body.style.setProperty("--line-height", val);
+      document.getElementById("line-height-val").textContent = val;
+    }
+
+    function toggleContrast() {
+      document.body.classList.toggle("high-contrast");
+      document.getElementById("btn-contrast").classList.toggle("active");
+    }
+
+    function toggleGrayscale() {
+      document.body.classList.toggle("grayscale-mode");
+      document.getElementById("btn-grayscale").classList.toggle("active");
+    }
+
+    function toggleReadingRuler() {
+      const ruler = document.getElementById("reading-ruler");
+      const btn = document.getElementById("btn-ruler");
+      const isVisible = ruler.style.display === "block";
+      ruler.style.display = isVisible ? "none" : "block";
+      btn.classList.toggle("active", !isVisible);
+    }
+
+    function toggleAnimations() {
+      document.body.classList.toggle("pause-animations");
+      document.getElementById("btn-motion").classList.toggle("active");
+    }
+
+    /* Mouse Spotlight Tracking */
+    const spotlight = document.getElementById("cursor-spotlight");
+    const readingRuler = document.getElementById("reading-ruler");
+
+    window.addEventListener("mousemove", (e) => {
+      spotlight.style.left = e.clientX + "px";
+      spotlight.style.top = e.clientY + "px";
+      if (readingRuler.style.display === "block") {
+        readingRuler.style.top = e.clientY + "px";
+      }
+    });
+
+    // Close menus on Escape
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        document.getElementById("share-modal").classList.remove("open");
+        document.getElementById("a11y-drawer").classList.remove("open");
+      }
+    });
+
+    // Initialize on load
+    document.addEventListener("DOMContentLoaded", initApp);
+  </script>
+</body>
+</html>
